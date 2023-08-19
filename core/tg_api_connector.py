@@ -26,11 +26,11 @@ class LoginPassword:
     __slots__ = (
         '_api_id', '_api_hash', '_phone', '_password', '_bot_token', '_client', '_client_name', '_device', '_proxy')
 
-    def __init__(self, api_id: int, api_hash: str, phone: str, proxy: dict) -> None:
+    def __init__(self, api_id: int, api_hash: str, phone: str, password: str, proxy: dict) -> None:
         self._api_id: int = api_id
         self._api_hash: str = api_hash
         self._phone: str = phone
-        self._password: str = None
+        self._password: str = password
         self._client: Optional[TelegramClient] = None
         self._device: str = 'iPhone 13 Pro Max'
         self._proxy: dict = proxy
@@ -80,7 +80,7 @@ class ChannelParser(LoginPassword):
 
     async def start(self) -> None:
         self.client = ...
-        await self.client.start(phone=self._phone, code_callback=self.verify_code)
+        await self.client.start(phone=self._phone, password=self._password, code_callback=self.verify_code)
 
     async def verify_code(self):
         code = None
@@ -129,6 +129,7 @@ class ChannelParser(LoginPassword):
 
 class Broadcaster:
     def __init__(self, phone, proxy):
+        print(proxy)
         self.bot = ChannelParser(settings.API_ID, settings.API_HASH, phone, proxy=proxy)
 
     async def log_in(self):

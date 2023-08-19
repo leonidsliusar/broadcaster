@@ -32,6 +32,7 @@ with col1:
     )
     if phone and '' not in proxy.values():
         if st.button(label='Отправить код подтверждения'):
+            proxy = dict(zip(['proxy_type', 'addr', 'port', 'username', 'password'], list(proxy.values())))
             b = Broadcaster(phone, proxy)
             asyncio.run(b.log_in())
             code = st.text_input(label='Введите код подтверждения')
