@@ -30,16 +30,17 @@ with col1:
         column_config={0: 'параметры', 1: 'значения'},
         use_container_width=True
     )
-    if phone and proxy:
-        code = st.text_input(label='Введите код подтверждения')
-        with open('code_proxy.json', 'r') as file:
-            data = json.load(file)
-            data.update({phone: code})
-        with open('code_proxy.json', 'w') as file:
-            json.dump(data, file)
-        if st.button(label='Посмотреть аккаунт'):
-            me = asyncio.run(main(phone, proxy))
-            st.write(me)
+    if phone and '' not in proxy.values():
+        if st.button(label='Отправить код подтверждения'):
+            code = st.text_input(label='Введите код подтверждения')
+            with open('code_proxy.json', 'r') as file:
+                data = json.load(file)
+                data.update({phone: code})
+            with open('code_proxy.json', 'w') as file:
+                json.dump(data, file)
+            if st.button(label='Посмотреть аккаунт'):
+                me = asyncio.run(main(phone, proxy))
+                st.write(me)
 
 with col2:
     st.write('Прокси можно приобрести например здесь: https://proxy-seller.io/')
