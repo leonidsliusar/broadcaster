@@ -52,30 +52,6 @@ class LoginPassword:
             print("Client is already set")
 
 
-class LoginSession:
-    __slots__ = ('_api_id', '_api_hash', '_phone', '_bot_token', '_client', '_client_name', '_device')
-
-    def __init__(self, api_id: int, api_hash: str, phone: str, bot_token: str) -> None:
-        self._api_id: int = api_id
-        self._api_hash: str = api_hash
-        self._phone: str = phone
-        self._bot_token: str = bot_token
-        self._client: Optional[TelegramClient] = None
-        self._client_name: str = phone
-        self._device: str = 'iPhone 13 Pro Max'
-
-    @property
-    def client(self) -> TelegramClient:
-        return self._client
-
-    @client.setter
-    def client(self, *args):
-        if self._client is None:
-            self._client = TelegramClient(self._client_name, self._api_id, self._api_hash)
-        else:
-            print("Client is already set")
-
-
 class ChannelParser(LoginPassword):
 
     async def start(self) -> None:
@@ -119,6 +95,17 @@ class ChannelParser(LoginPassword):
         await self.client(UpdateProfileRequest(**kwargs))
 
 
+class Broadcaster:
+    def __init__(self, phone, password, proxy):
+        self.bot = ChannelParser(settings.API_ID, settings.API_HASH, phone=phone, password=password, proxy=proxy)
+
+    async def log_in(self):
+        await self.bot.start()
+
+    async def show_me(self):
+        return await self.bot.about_me()
+
+
 # proxy = {
 #     'proxy_type': 'socks5',
 #     'addr': '185.155.233.153',
@@ -126,14 +113,6 @@ class ChannelParser(LoginPassword):
 #     'username': 'loslyusar',
 #     'password': 'uKFgqacpvp',
 # }
-
-class Broadcaster:
-    def __init__(self, phone, proxy):
-        print(proxy)
-        self.bot = ChannelParser(settings.API_ID, settings.API_HASH, phone, proxy=proxy)
-
-    async def log_in(self):
-        await self.bot.start()
-
-    async def show_me(self):
-        return await self.bot.about_me()
+#
+# b = Broadcaster('37120074619', 'LXQp5Da2*', proxy)
+# asyncio.run(b.log_in())

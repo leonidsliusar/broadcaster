@@ -17,7 +17,8 @@ class Protocols(Enum):
 protocol_options = [protocol.value for protocol in Protocols]
 
 with col1:
-    phone = st.text_input(label='Введите номер телфона')
+    phone = st.text_input(label='Введите номер телфона аккаунта')
+    password = st.text_input(label='Введите пароль от аккаунта')
     st.write('Введите данные прокси')
     proxy = st.data_editor(
         {
@@ -33,7 +34,7 @@ with col1:
     if phone and '' not in proxy.values():
         if st.button(label='Отправить код подтверждения'):
             proxy = dict(zip(['proxy_type', 'addr', 'port', 'username', 'password'], list(proxy.values())))
-            b = Broadcaster(phone, proxy)
+            b = Broadcaster(phone=phone, password=password, proxy=proxy)
             asyncio.run(b.log_in())
             code = st.text_input(label='Введите код подтверждения')
             with open('code_proxy.json', 'r') as file:
