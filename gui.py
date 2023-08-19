@@ -2,7 +2,7 @@ import asyncio
 import json
 from enum import Enum
 import streamlit as st
-from core.tg_api_connector import main
+from core.tg_api_connector import Broadcaster
 
 col1, col2 = st.columns(2)
 
@@ -32,6 +32,8 @@ with col1:
     )
     if phone and '' not in proxy.values():
         if st.button(label='Отправить код подтверждения'):
+            b = Broadcaster(phone, proxy)
+            asyncio.run(b.log_in())
             code = st.text_input(label='Введите код подтверждения')
             with open('code_proxy.json', 'r') as file:
                 data = json.load(file)
@@ -39,7 +41,7 @@ with col1:
             with open('code_proxy.json', 'w') as file:
                 json.dump(data, file)
             if st.button(label='Посмотреть аккаунт'):
-                me = asyncio.run(main(phone, proxy))
+                me = asyncio.run(b.show_me())
                 st.write(me)
 
 with col2:

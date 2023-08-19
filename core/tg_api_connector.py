@@ -127,9 +127,12 @@ class ChannelParser(LoginPassword):
 #     'password': 'uKFgqacpvp',
 # }
 
+class Broadcaster:
+    def __init__(self, phone, proxy):
+        self.bot = ChannelParser(settings.API_ID, settings.API_HASH, phone, proxy=proxy)
 
-async def main(phone: str, proxy: dict):
-    proxy = dict(zip(['proxy_type', 'addr', 'port', 'username', 'password'], list(proxy.values())))
-    bot = ChannelParser(settings.API_ID, settings.API_HASH, phone, proxy=proxy)
-    await bot.start()
-    return await bot.about_me()
+    async def log_in(self):
+        await self.bot.start()
+
+    async def show_me(self):
+        return await self.bot.about_me()
