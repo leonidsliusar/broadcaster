@@ -37,14 +37,16 @@ with col1:
             b = Broadcaster(phone=phone, password=password, proxy=proxy)
             asyncio.run(b.log_in())
             code = st.text_input(label='Введите код подтверждения')
-            with open('code_proxy.json', 'r') as file:
-                data = json.load(file)
-                data.update({phone: code})
-            with open('code_proxy.json', 'w') as file:
-                json.dump(data, file)
-            if st.button(label='Посмотреть аккаунт'):
-                me = asyncio.run(b.show_me())
-                st.write(me)
+            if code:
+                if st.button(label='Подтвердить код'):
+                    with open('code_proxy.json', 'r') as file:
+                        data = json.load(file)
+                        data.update({phone: code})
+                    with open('code_proxy.json', 'w') as file:
+                        json.dump(data, file)
+                    if st.button(label='Посмотреть аккаунт'):
+                        me = asyncio.run(b.show_me())
+                        st.write(me)
 
 with col2:
     st.write('Прокси можно приобрести например здесь: https://proxy-seller.io/')
