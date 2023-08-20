@@ -106,13 +106,13 @@ class Broadcaster:
         return await self.bot.about_me()
 
 
-# proxy = {
-#     'proxy_type': 'socks5',
-#     'addr': '185.155.233.153',
-#     'port': 50101,
-#     'username': 'loslyusar',
-#     'password': 'uKFgqacpvp',
-# }
-#
-# b = Broadcaster('37120074619', 'LXQp5Da2*', proxy)
-# asyncio.run(b.log_in())
+proxy = {
+    'proxy_type': 'socks5',
+    'addr': '185.155.233.153',
+    'port': 50101,
+    'username': 'loslyusar',
+    'password': 'uKFgqacpvp',
+}
+
+b = Broadcaster('37120074619', 'LXQp5Da2*', proxy)
+asyncio.run(b.log_in())

@@ -35,8 +35,8 @@ with col1:
         if st.button(label='Отправить код подтверждения'):
             proxy = dict(zip(['proxy_type', 'addr', 'port', 'username', 'password'], list(proxy.values())))
             b = Broadcaster(phone=phone, password=password, proxy=proxy)
-            asyncio.run(b.log_in())
             code = st.text_input(label='Введите код подтверждения')
+            asyncio.run(b.log_in())
             if code:
                 if st.button(label='Подтвердить код'):
                     with open('code_proxy.json', 'r') as file:
